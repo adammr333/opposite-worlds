@@ -1,3 +1,63 @@
-[gd_scene format=3 uid="uid://cs3vdomkqx7xh"]
+[gd_scene load_steps=7 format=3 uid="uid://cs3vdomkqx7xh"]
+
+[ext_resource type="Script" uid="uid://btnkuxibd0n0g" path="res://scripts/game.gd" id="1_lnu2h"]
+[ext_resource type="Texture2D" uid="uid://cqhe68g6h5uxr" path="res://assets/placeholder-level.png" id="1_uwrxv"]
+[ext_resource type="PackedScene" uid="uid://ba50iug88p6yw" path="res://scenes/player.tscn" id="3_lbhrr"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_iywne"]
+size = Vector2(1766, 33)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_lnu2h"]
+size = Vector2(601, 240)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_lbhrr"]
+size = Vector2(355, 10)
 
 [node name="Game" type="Node2D"]
+script = ExtResource("1_lnu2h")
+
+[node name="Level" type="Sprite2D" parent="."]
+position = Vector2(1280, 360)
+texture = ExtResource("1_uwrxv")
+
+[node name="Ground" type="StaticBody2D" parent="Level"]
+position = Vector2(-568, -121)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Level/Ground"]
+position = Vector2(965, 206.5)
+shape = SubResource("RectangleShape2D_iywne")
+
+[node name="Coast" type="StaticBody2D" parent="Level"]
+position = Vector2(-75, -7)
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="Level/Coast"]
+polygon = PackedVector2Array(-771, 148, -531, 138, -411, 76)
+
+[node name="SeaFloor" type="StaticBody2D" parent="Level"]
+position = Vector2(-1013, 226)
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="Level/SeaFloor"]
+polygon = PackedVector2Array(-274, -94, -197, -82, -166, 87, -127, 122, 142, 118, 182, 87, 185, -85, 167, -85, 162, 83, 133, 104, -123, 103, -154, 77, -189, -94)
+
+[node name="Water" type="Area2D" parent="Level"]
+position = Vector2(-1013, 176)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Level/Water"]
+position = Vector2(26.5, 66)
+shape = SubResource("RectangleShape2D_lnu2h")
+
+[node name="Dock" type="StaticBody2D" parent="Level"]
+position = Vector2(-840, 74)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Level/Dock"]
+position = Vector2(176.5, 0)
+shape = SubResource("RectangleShape2D_lbhrr")
+one_way_collision = true
+
+[node name="Player" parent="." instance=ExtResource("3_lbhrr")]
+position = Vector2(1002, 375)
+
+[node name="PlayerCamera" type="Camera2D" parent="Player"]
+
+[connection signal="body_entered" from="Level/Water" to="." method="_on_water_body_entered"]
+[connection signal="body_exited" from="Level/Water" to="." method="_on_water_body_exited"]

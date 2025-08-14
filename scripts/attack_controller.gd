@@ -1,0 +1,30 @@
+extends Node
+
+@onready var player: Node = $".."
+@onready var aimCursor: Node = $"../AimCursor"
+@onready var reloadTimer: Node = $"../ReloadTimer"
+
+var isAiming: bool
+var isReloading: bool
+
+
+func _process(delta: float) -> void:
+	aimCursor.global_position = aimCursor.get_global_mouse_position()
+
+
+func _unhandled_input(event: InputEvent) -> void:
+	if event.is_action_pressed("r_click"):
+		aimCursor.visible = true
+		isAiming = true
+		Input.warp_mouse(Vector2(1280/2 + 50, 720/2))
+	if event.is_action_released("r_click"):
+		aimCursor.visible = false
+		isAiming = false
+	if event.is_action_pressed("l_click") && isAiming && !isReloading:
+		print("FIRE!")
+		isReloading = true
+		reloadTimer.start()
+
+
+func _on_reload_timer_timeout() -> void:
+	isReloading = false

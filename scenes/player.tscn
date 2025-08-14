@@ -1,0 +1,80 @@
+[gd_scene load_steps=10 format=3 uid="uid://ba50iug88p6yw"]
+
+[ext_resource type="Texture2D" uid="uid://d28lxta8j0xm6" path="res://assets/Old_man_move.png" id="1_3vyb7"]
+[ext_resource type="Script" uid="uid://c1afj4tchggka" path="res://scripts/player.gd" id="1_qhqgy"]
+[ext_resource type="Script" uid="uid://byfr2m402q2it" path="res://scripts/movement_controller.gd" id="2_g2els"]
+[ext_resource type="Script" uid="uid://ivcunkic8gvf" path="res://scripts/attack_controller.gd" id="4_dqkch"]
+[ext_resource type="Texture2D" uid="uid://boqe307p31edu" path="res://assets/aim-cursor.png" id="5_qlg0r"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_g2els"]
+size = Vector2(28, 30)
+
+[sub_resource type="Animation" id="Animation_qhqgy"]
+resource_name = "run"
+length = 0.39
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:rotation")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.1, 0.2, 0.3, 0.4),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1),
+"update": 0,
+"values": [0.0, 0.174533, 0.0, -0.174533, 0.0]
+}
+
+[sub_resource type="Animation" id="Animation_dqkch"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:rotation")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [0.0]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_qlg0r"]
+_data = {
+&"RESET": SubResource("Animation_dqkch"),
+&"run": SubResource("Animation_qhqgy")
+}
+
+[node name="Player" type="CharacterBody2D"]
+script = ExtResource("1_qhqgy")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture = ExtResource("1_3vyb7")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+visible = false
+position = Vector2(0, 1)
+shape = SubResource("RectangleShape2D_g2els")
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+&"": SubResource("AnimationLibrary_qlg0r")
+}
+
+[node name="MovementController" type="Node" parent="."]
+script = ExtResource("2_g2els")
+
+[node name="AttackController" type="Node" parent="."]
+script = ExtResource("4_dqkch")
+
+[node name="AimCursor" type="Sprite2D" parent="."]
+visible = false
+position = Vector2(50, 0)
+texture = ExtResource("5_qlg0r")
+
+[node name="ReloadTimer" type="Timer" parent="."]
+one_shot = true
+
+[connection signal="timeout" from="ReloadTimer" to="AttackController" method="_on_reload_timer_timeout"]
