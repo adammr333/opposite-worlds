@@ -13,7 +13,7 @@ func _process(delta: float) -> void:
 
 
 func _unhandled_input(event: InputEvent) -> void:
-	if event.is_action_pressed("r_click"):
+	if event.is_action_pressed("r_click") && Autoload.gameState:
 		aimCursor.visible = true
 		isAiming = true
 		Input.warp_mouse(Vector2(1280/2 + 50, 720/2))

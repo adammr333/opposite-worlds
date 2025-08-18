@@ -25,3 +25,7 @@ func _unhandled_input(event: InputEvent) -> void:
 	if event.is_action_pressed("escape"):
 		if Input.MOUSE_MODE_CONFINED_HIDDEN:
 			Input.mouse_mode = Input.MOUSE_MODE_VISIBLE
+
+
+func _on_animation_player_animation_finished(anim_name: StringName) -> void:
+	pass # Replace with function body.
