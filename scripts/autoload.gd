@@ -3,6 +3,8 @@ extends Node
 @onready var game: Node = get_tree().get_root().get_node("Game")
 @onready var animPlayer: Node = get_tree().get_root().get_node("Game/AnimationPlayer")
 @onready var titleScreen: Node = get_tree().get_root().get_node("Game/TitleScreen")
+@onready var controlsLable: Node = get_tree().get_root().get_node("Game/Player/Controls/Controls")
+@onready var tutorialNode1: Node = get_tree().get_root().get_node("Game/TutorialNode1")
 
 var titleState: bool
 var gameState: bool
@@ -29,4 +31,5 @@ func _start_game(anim_name: StringName):
 	if anim_name == "game_start":
 		titleState = false
 		gameState = true
+		controlsLable.visible = true
 	pass

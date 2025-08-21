@@ -10,6 +10,7 @@ var isReloading: bool
 
 func _process(delta: float) -> void:
 	aimCursor.global_position = aimCursor.get_global_mouse_position()
+	pass
 
 
 func _unhandled_input(event: InputEvent) -> void:
@@ -24,7 +25,8 @@ func _unhandled_input(event: InputEvent) -> void:
 		print("FIRE!")
 		isReloading = true
 		reloadTimer.start()
-
+	pass
 
 func _on_reload_timer_timeout() -> void:
 	isReloading = false
+	pass

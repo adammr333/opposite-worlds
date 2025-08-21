@@ -6,6 +6,10 @@ class_name player
 var isSwimming: bool
 
 
+func _ready() -> void:
+	Autoload.tutorialNode1.body_entered
+
+
 func _process(delta: float) -> void:
 	if isSwimming:
 		playerSprite.modulate = Color(0.0, 0.75, 1.0, 1.0)

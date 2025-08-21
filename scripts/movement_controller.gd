@@ -29,3 +29,4 @@ func _physics_process(delta: float) -> void:
 				player.velocity.y = move_toward(player.velocity.y, 0, SPEED)
 			animPlayer.stop()
 		player.move_and_slide()
+	pass
