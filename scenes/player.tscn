@@ -1,4 +1,4 @@
-[gd_scene load_steps=10 format=3 uid="uid://ba50iug88p6yw"]
+[gd_scene load_steps=11 format=3 uid="uid://ba50iug88p6yw"]
 
 [ext_resource type="Texture2D" uid="uid://d28lxta8j0xm6" path="res://assets/Old_man_move.png" id="1_3vyb7"]
 [ext_resource type="Script" uid="uid://c1afj4tchggka" path="res://scripts/player.gd" id="1_qhqgy"]
@@ -47,6 +47,8 @@ _data = {
 &"run": SubResource("Animation_qhqgy")
 }
 
+[sub_resource type="CircleShape2D" id="CircleShape2D_qlg0r"]
+
 [node name="Player" type="CharacterBody2D"]
 script = ExtResource("1_qhqgy")
 
@@ -64,11 +66,6 @@ script = ExtResource("2_g2els")
 [node name="AttackController" type="Node" parent="."]
 script = ExtResource("4_dqkch")
 
-[node name="AimCursor" type="Sprite2D" parent="."]
-visible = false
-position = Vector2(50, 0)
-texture = ExtResource("5_qlg0r")
-
 [node name="ReloadTimer" type="Timer" parent="."]
 one_shot = true
 
@@ -76,5 +73,16 @@ one_shot = true
 libraries = {
 &"": SubResource("AnimationLibrary_qlg0r")
 }
+
+[node name="AimCursor" type="Area2D" parent="."]
+visible = false
+
+[node name="AimCursor" type="Sprite2D" parent="AimCursor"]
+position = Vector2(50, 0)
+texture = ExtResource("5_qlg0r")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="AimCursor"]
+position = Vector2(50, 0)
+shape = SubResource("CircleShape2D_qlg0r")
 
 [connection signal="timeout" from="ReloadTimer" to="AttackController" method="_on_reload_timer_timeout"]

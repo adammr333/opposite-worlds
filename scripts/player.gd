@@ -7,7 +7,7 @@ var isSwimming: bool
 
 
 func _ready() -> void:
-	Autoload.tutorialNode1.body_entered
+	pass
 
 
 func _process(delta: float) -> void:

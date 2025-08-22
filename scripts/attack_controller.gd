@@ -7,6 +7,8 @@ extends Node
 var isAiming: bool
 var isReloading: bool
 
+signal shoot_gun
+
 
 func _process(delta: float) -> void:
 	aimCursor.global_position = aimCursor.get_global_mouse_position()
@@ -23,9 +25,11 @@ func _unhandled_input(event: InputEvent) -> void:
 		isAiming = false
 	if event.is_action_pressed("l_click") && isAiming && !isReloading:
 		print("FIRE!")
+		emit_signal("shoot_gun")
 		isReloading = true
 		reloadTimer.start()
 	pass
+
 
 func _on_reload_timer_timeout() -> void:
 	isReloading = false

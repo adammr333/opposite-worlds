@@ -1,7 +1,8 @@
-[gd_scene load_steps=15 format=3 uid="uid://cs3vdomkqx7xh"]
+[gd_scene load_steps=17 format=3 uid="uid://cs3vdomkqx7xh"]
 
 [ext_resource type="Script" uid="uid://btnkuxibd0n0g" path="res://scripts/game.gd" id="1_lnu2h"]
 [ext_resource type="Texture2D" uid="uid://cqhe68g6h5uxr" path="res://assets/placeholder-level.png" id="1_uwrxv"]
+[ext_resource type="PackedScene" uid="uid://bylfaa1s26a6b" path="res://scenes/can.tscn" id="2_lbhrr"]
 [ext_resource type="PackedScene" uid="uid://ba50iug88p6yw" path="res://scenes/player.tscn" id="3_lbhrr"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_lnu2h"]
@@ -16,6 +17,9 @@ size = Vector2(601, 240)
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_lbhrr"]
 size = Vector2(355, 10)
 
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_p57ef"]
+size = Vector2(20, 231)
+
 [sub_resource type="LabelSettings" id="LabelSettings_lnu2h"]
 
 [sub_resource type="Animation" id="Animation_lbhrr"]
@@ -27,10 +31,10 @@ tracks/0/path = NodePath("Player:position")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
+"times": PackedFloat32Array(0, 0.001),
+"transitions": PackedFloat32Array(1, 1),
 "update": 0,
-"values": [Vector2(859, 402)]
+"values": [Vector2(818, 402), Vector2(821, 402)]
 }
 tracks/1/type = "value"
 tracks/1/imported = false
@@ -39,10 +43,10 @@ tracks/1/path = NodePath("Player:rotation")
 tracks/1/interp = 1
 tracks/1/loop_wrap = true
 tracks/1/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
+"times": PackedFloat32Array(0, 0.001),
+"transitions": PackedFloat32Array(1, 1),
 "update": 0,
-"values": [-1.5708]
+"values": [-1.5708, -1.5708]
 }
 
 [sub_resource type="Animation" id="Animation_iywne"]
@@ -58,7 +62,7 @@ tracks/0/keys = {
 "times": PackedFloat32Array(0, 0.3),
 "transitions": PackedFloat32Array(1, 1),
 "update": 0,
-"values": [Vector2(859, 402), Vector2(859, 386)]
+"values": [Vector2(818, 402), Vector2(818, 386)]
 }
 tracks/1/type = "value"
 tracks/1/imported = false
@@ -75,30 +79,6 @@ tracks/1/keys = {
 
 [sub_resource type="Animation" id="Animation_lnu2h"]
 resource_name = "title_screen"
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath("Player:position")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 0,
-"values": [Vector2(859, 402)]
-}
-tracks/1/type = "value"
-tracks/1/imported = false
-tracks/1/enabled = true
-tracks/1/path = NodePath("Player:rotation")
-tracks/1/interp = 1
-tracks/1/loop_wrap = true
-tracks/1/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 0,
-"values": [-1.5708]
-}
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_iywne"]
 _data = {
@@ -116,10 +96,14 @@ font_size = 32
 script = ExtResource("1_lnu2h")
 
 [node name="TutorialNode1" type="Area2D" parent="."]
-position = Vector2(1072, 428)
+position = Vector2(1010, 428)
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="TutorialNode1"]
 shape = SubResource("CircleShape2D_lnu2h")
+
+[node name="Can" parent="." instance=ExtResource("2_lbhrr")]
+position = Vector2(1160, 356)
+scale = Vector2(0.535845, 0.535845)
 
 [node name="Level" type="Sprite2D" parent="."]
 position = Vector2(1280, 360)
@@ -159,8 +143,15 @@ position = Vector2(176.5, 0)
 shape = SubResource("RectangleShape2D_lbhrr")
 one_way_collision = true
 
+[node name="CabinBoundary" type="StaticBody2D" parent="Level"]
+position = Vector2(-251, 68)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Level/CabinBoundary"]
+position = Vector2(0, -105.5)
+shape = SubResource("RectangleShape2D_p57ef")
+
 [node name="Player" parent="." instance=ExtResource("3_lbhrr")]
-position = Vector2(859, 402)
+position = Vector2(818, 402)
 rotation = -1.5708
 
 [node name="PlayerCamera" type="Camera2D" parent="Player"]
@@ -179,6 +170,7 @@ grow_horizontal = 2
 grow_vertical = 0
 
 [node name="Controls" type="Label" parent="Player/Controls"]
+visible = false
 layout_mode = 1
 anchors_preset = 5
 anchor_left = 0.5
