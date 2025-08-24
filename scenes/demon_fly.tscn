@@ -1,0 +1,72 @@
+[gd_scene load_steps=11 format=3 uid="uid://dtdhlv100gbn7"]
+
+[ext_resource type="Script" uid="uid://v1sejf8w5g4w" path="res://scripts/demon_fly.gd" id="1_88f5f"]
+[ext_resource type="Texture2D" uid="uid://c463obs563woc" path="res://assets/Demon_fly.png" id="2_egldc"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ii51m"]
+atlas = ExtResource("2_egldc")
+region = Rect2(0, 0, 128, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_qynsv"]
+atlas = ExtResource("2_egldc")
+region = Rect2(128, 0, 128, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_funqy"]
+atlas = ExtResource("2_egldc")
+region = Rect2(256, 0, 128, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_nvwcc"]
+atlas = ExtResource("2_egldc")
+region = Rect2(640, 0, 128, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_klwr8"]
+atlas = ExtResource("2_egldc")
+region = Rect2(768, 0, 128, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_jo2kd"]
+atlas = ExtResource("2_egldc")
+region = Rect2(896, 0, 128, 64)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_tdb46"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ii51m")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_qynsv")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_funqy")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_nvwcc")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_klwr8")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_jo2kd")
+}],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_xfqit"]
+size = Vector2(148, 76)
+
+[node name="DemonFly" type="Area2D"]
+script = ExtResource("1_88f5f")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+sprite_frames = SubResource("SpriteFrames_tdb46")
+autoplay = "default"
+frame = 1
+frame_progress = 0.952323
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("RectangleShape2D_xfqit")
+
+[node name="VMoveTimer" type="Timer" parent="."]
+wait_time = 0.5

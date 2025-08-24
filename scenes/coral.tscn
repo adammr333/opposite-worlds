@@ -1,0 +1,22 @@
+[gd_scene load_steps=4 format=3 uid="uid://br3spbqfem86m"]
+
+[ext_resource type="Texture2D" uid="uid://cssvxjymtyemu" path="res://assets/coral.png" id="1_gwcag"]
+[ext_resource type="Script" uid="uid://dpub7u73jat6p" path="res://scripts/coral.gd" id="1_qqx7l"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_qqx7l"]
+size = Vector2(42, 30)
+
+[node name="Coral" type="Area2D"]
+script = ExtResource("1_qqx7l")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+position = Vector2(0, -16)
+texture = ExtResource("1_gwcag")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(0, -15)
+shape = SubResource("RectangleShape2D_qqx7l")
+
+[node name="RespawnTimer" type="Timer" parent="."]
+wait_time = 5.0
+one_shot = true

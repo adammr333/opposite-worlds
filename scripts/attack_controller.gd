@@ -2,10 +2,8 @@ extends Node
 
 @onready var player: Node = $".."
 @onready var aimCursor: Node = $"../AimCursor"
-@onready var reloadTimer: Node = $"../ReloadTimer"
 
 var isAiming: bool
-var isReloading: bool
 
 signal shoot_gun
 
@@ -23,14 +21,7 @@ func _unhandled_input(event: InputEvent) -> void:
 	if event.is_action_released("r_click"):
 		aimCursor.visible = false
 		isAiming = false
-	if event.is_action_pressed("l_click") && isAiming && !isReloading:
+	if event.is_action_pressed("l_click") && isAiming && Autoload.coralCount > 0:
 		print("FIRE!")
 		emit_signal("shoot_gun")
-		isReloading = true
-		reloadTimer.start()
-	pass
-
-
-func _on_reload_timer_timeout() -> void:
-	isReloading = false
 	pass

@@ -1,11 +1,13 @@
 extends Area2D
+class_name demon_ground
+
+const SPEED = 250
 
 @onready var attackController = get_tree().get_root().get_node("Game/Player/AttackController")
-@onready var animPlayer = $AnimationPlayer
 
 var canBeShot: bool = false
 
-signal _can_is_shot
+signal _demon_shot
 
 
 func _ready() -> void:
@@ -14,26 +16,23 @@ func _ready() -> void:
 	attackController.shoot_gun.connect(_on_shoot_gun)
 
 
+func _physics_process(delta: float) -> void:
+	position -= Vector2(1, 0) * SPEED * delta
+	pass
+
+
 func _on_area_entered(area: Area2D):
 	canBeShot = true
-	print(canBeShot)
+	pass
 
 
 func _on_area_exited(area: Area2D):
 	canBeShot = false
-	print(canBeShot)
 	pass
 
 
 func _on_shoot_gun():
 	if canBeShot:
-		animPlayer.play("can_shot")
-		animPlayer.animation_finished.connect(_on_animation_finished)
-		emit_signal("_can_is_shot")
-	pass
-
-
-func _on_animation_finished(anim_name: StringName):
-	if anim_name == "can_shot":
+		emit_signal("_demon_shot")
 		queue_free()
 	pass
